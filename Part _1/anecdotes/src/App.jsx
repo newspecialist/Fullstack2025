@@ -21,6 +21,8 @@ const MostVoted = ({ anecdotes, votes }) => {
     return <p>No votes yet.</p>;
   }
 
+console.log();
+
   return (
     <div>
       <h2>Anecdote with most votes</h2>
@@ -46,11 +48,7 @@ const App = () => {
   const [selected, setSelected] = useState(0)
   const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0));
 
-  const handleAnecdoteClick = () => {
-    const random = Math.floor(Math.random() * 8);
-    console.log(random)
-    setSelected(random)
-  }
+  
 
   const handleVoteClick = () => {
     const newVotes = [...votes];
