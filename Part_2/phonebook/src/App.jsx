@@ -66,10 +66,8 @@ const App = () => {
   const person = persons.find(n => n.id === id)
     
 if (window.confirm(`Delete ${person.name}?`)) {
-  const changedPerson = { ...person, deleted: true };
-
   personService
-    .update(id, changedPerson)
+    .doDelete(id)
     .then(() => {
       // Optimistically update UI
       setPersons(persons.filter(p => p.id !== id));
@@ -102,8 +100,7 @@ if (window.confirm(`Delete ${person.name}?`)) {
     if(!emptyvalues){
     const personObject = {
       name: newName,
-      number: newNumber,
-      deleted: false
+      number: newNumber
     }
 
     const nameExists = persons.some(person => person.name === newName);

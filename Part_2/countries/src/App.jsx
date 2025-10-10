@@ -19,16 +19,19 @@ const App = () => {
   }, []) //the empty [] array says the effect is only for the first render.
 
 const handleCountrySelection = (selectedCountryName) => {
+
+  
   countryService
     .getCountry(selectedCountryName)
     .then(countryResponse => {
       setCountry(countryResponse); // update state
       const capitalCity = countryResponse.capital[0]; // get the capital directly
-
+      
       return countryService.getWeather(capitalCity); // pass it into getWeather
     })
     .then(weatherResponse => {
       setWeather(weatherResponse); // store weather in state
+      console.log(weatherResponse)
     })
     .catch(error => {
       console.error('Failed to fetch country or weather details:', error);
@@ -60,13 +63,20 @@ const handleCountrySelection = (selectedCountryName) => {
             alt={`Flag of ${country.name.common}`}
           />
 
-          <h2>Weather in {country.capital}</h2>
-          <p>Temperature {weather.current.temp_c} Celsius</p>
-          <img
-            src={weather.current.condition.icon}
-            alt={`Flag of ${weather.current.text}`}
-          />
-          <p>Wind {weather.current.wind_kph} km/h {weather.current.wind_dir}</p>
+        
+          {weather && weather.current && (
+            <>
+              <h2>Weather in {country.capital}</h2>
+              <p>Temperature {weather.current.temp_c} Celsius</p>
+              <img
+                src={weather.current.condition.icon}
+                alt={weather.current.condition.text}
+              />
+              <p>
+                Wind {weather.current.wind_kph} km/h {weather.current.wind_dir}
+              </p>
+            </>
+          )}
           
         </>
       )}
